@@ -96,24 +96,27 @@
             </div>
         </nav>
     </header>
-  <section style="position:relative; min-height:420px; display:flex; align-items:center; background-image:url('https://raw.githubusercontent.com/mahroosh22/Original-Institute-of-technology/main/college-gate.jpg'); background-size:cover; background-position:center;">
+  <section id="hero-slider" style="position:relative; min-height:420px; display:flex; align-items:center; overflow:hidden;">
 
-  <div style="position:absolute; inset:0; background:rgba(15,25,70,0.82);"></div>
+  <div class="slide active" style="background-image:url('https://raw.githubusercontent.com/mahroosh22/Original-Institute-of-technology/main/college-gate.jpg');"></div>
+  <div class="slide" style="background-image:url('https://raw.githubusercontent.com/mahroosh22/Original-Institute-of-technology/main/slide%201%20hero%20section.webp');"></div>
+  <div class="slide" style="background-image:url('https://raw.githubusercontent.com/mahroosh22/Original-Institute-of-technology/main/slide4%20hero%20section.webp');"></div>
+  <div class="slide" style="background-image:url('https://raw.githubusercontent.com/mahroosh22/Original-Institute-of-technology/main/slide%202%20hero%20section.webp');"></div>
+  <div class="slide" style="background-image:url('https://raw.githubusercontent.com/mahroosh22/Original-Institute-of-technology/main/slid%203%20hero%20section.webp');"></div>
+  <div class="slide" style="background-image:url('https://raw.githubusercontent.com/mahroosh22/Original-Institute-of-technology/main/slide%205%20hero%20section.webp');"></div>
+
+  <div style="position:absolute; inset:0; background:rgba(15,25,70,0.82); z-index:1;"></div>
 
   <div style="position:relative; z-index:2; padding:50px 40px;">
-
     <span style="display:inline-block; background:#c0392b; color:#fff; font-size:12px; font-weight:600; padding:5px 16px; border-radius:20px; margin-bottom:16px;">
       Admissions Open 2026 — Limited Seats
     </span>
-
     <h1 style="color:#fff; font-size:40px; font-weight:700; line-height:1.2; margin-bottom:8px;">
       Oriental Institute<br>of Technology
     </h1>
-
     <p style="color:#aac4f0; font-size:16px; margin-bottom:24px;">
       Mandi Bahauddin, Punjab, Pakistan
     </p>
-
     <div style="display:flex; gap:30px; margin-bottom:28px;">
       <div>
         <div style="color:#fff; font-size:22px; font-weight:700;">5+</div>
@@ -130,14 +133,37 @@
         <div style="color:#7a9fd4; font-size:11px; text-transform:uppercase;">Job Support</div>
       </div>
     </div>
-
     <div style="display:flex; gap:12px;">
       <a href="admission.html" style="background:#c0392b; color:#fff; padding:12px 28px; border-radius:6px; text-decoration:none; font-weight:600; font-size:14px;">Apply Now</a>
       <a href="about.html" style="background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,0.45); padding:12px 28px; border-radius:6px; text-decoration:none; font-weight:600; font-size:14px;">Learn More</a>
     </div>
-
   </div>
 </section>
+
+<style>
+.slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+  z-index: 0;
+}
+.slide.active {
+  opacity: 1;
+}
+</style>
+
+<script>
+const slides = document.querySelectorAll('#hero-slider .slide');
+let current = 0;
+setInterval(() => {
+  slides[current].classList.remove('active');
+  current = (current + 1) % slides.length;
+  slides[current].classList.add('active');
+}, 3000);
+</script>
   <px;">
     <!-- ===== PRINCIPAL'S MESSAGE SECTION ===== -->
 <section id="principal" style="
