@@ -5,29 +5,36 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   compress:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
       - name: Install imagemin
-        run: npm install -g imagemin-cli imagemin-mozjpeg imagemin-pngquant imagemin-webp
+        run: |
+          npm install -g imagemin-cli
+          npm install -g imagemin-mozjpeg
+          npm install -g imagemin-pngquant
 
-      - name: Compress JPG images
-        run: imagemin *.jpg --out-dir=. --plugin=mozjpeg
-
-      - name: Compress PNG images
-        run: imagemin *.png --out-dir=. --plugin=pngquant
-
-      - name: Compress WebP images
-        run: imagemin *.webp --out-dir=. --plugin=webp
+      - name: Compress images
+        run: |
+          imagemin *.jpg --out-dir=. --plugin=mozjpeg || true
+          imagemin *.png --out-dir=. --plugin=pngquant || true
 
       - name: Commit compressed images
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add *.jpg *.png *.webp
-          git diff --staged --quiet || git commit -m "Compress images"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --staged --quiet || git commit -m "chore: compress images"
           git push
