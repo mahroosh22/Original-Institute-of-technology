@@ -143,19 +143,19 @@
     <p style="color:#aac4f0; font-size:16px; margin-bottom:24px;">
       Mandi Bahauddin, Punjab, Pakistan
     </p>
-    <div style="display:flex; gap:30px; margin-bottom:28px;">
+    <div style="display:flex; gap:30px; margin-bottom:28px;" id="counterSection"></div>
       <div>
-        <div style="color:#fff; font-size:22px; font-weight:700;">5+</div>
+        <div style="color:#fff; font-size:22px; font-weight:700;"><span id="count1">5+</span></div>
         <div style="color:#7a9fd4; font-size:11px; text-transform:uppercase;">Programmes</div>
       </div>
       <div style="width:1px; background:rgba(255,255,255,0.15);"></div>
       <div>
-        <div style="color:#fff; font-size:22px; font-weight:700;">500+</div>
+        <div style="color:#fff; font-size:22px; font-weight:700;"><span id="count2">500+</span></div>
         <div style="color:#7a9fd4; font-size:11px; text-transform:uppercase;">Students</div>
       </div>
       <div style="width:1px; background:rgba(255,255,255,0.15);"></div>
       <div>
-        <div style="color:#fff; font-size:22px; font-weight:700;">100%</div>
+        <div style="color:#fff; font-size:22px; font-weight:700;"><span id="count3">100%</span></div>
         <div style="color:#7a9fd4; font-size:11px; text-transform:uppercase;">Job Support</div>
       </div>
     </div>
@@ -589,6 +589,34 @@ kbSlider('kb5', 'd5', 3800);
 
   </div>
 </footer>
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCounter('count1', 5, '+');
+      animateCounter('count2', 500, '+');
+      animateCounter('count3', 100, '%');
+      observer.unobserve(entry.target);
+    }
+  });
+});
 
+function animateCounter(id, target, suffix) {
+  const el = document.getElementById(id);
+  let count = 0;
+  const speed = target > 100 ? 5 : 20;
+  const interval = setInterval(() => {
+    count += target > 100 ? 5 : 1;
+    el.textContent = count + suffix;
+    if (count >= target) {
+      el.textContent = target + suffix;
+      clearInterval(interval);
+    }
+  }, speed);
+}
+
+const section = document.getElementById('counterSection');
+if (section) observer.observe(section);
+</script>
 </body>
 </html>
