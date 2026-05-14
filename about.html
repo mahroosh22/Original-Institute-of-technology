@@ -354,7 +354,7 @@
   </div>
 </footer>
 <script>
-const animCards = document.querySelectorAll('.why-card, .flip-card');
+const animCards = document.querySelectorAll('[style*="perspective:1000px"], [style*="background:#1a2b6e"]');
 const animObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
