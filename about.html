@@ -354,7 +354,29 @@
   </div>
 </footer>
 <script>
-const animCards = document.querySelectorAll('[style*="perspective:1000px"], [style*="background:#1a2b6e"]');
+const animCards = document.querySelectorAll('[style*="perspective:1000px"]');
+const whyCards = document.querySelectorAll('[style*="background:#1a2b6e; border:0.5px solid #2a3b8e; border-radius:12px; padding:20px; text-align:center;"]');
+whyCards.forEach((card, i) => {
+  card.style.opacity = '0';
+  card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  if (i % 2 === 0) {
+    card.style.transform = 'translateX(-60px)';
+  } else {
+    card.style.transform = 'translateX(60px)';
+  }
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateX(0)';
+        }, i * 150);
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  obs.observe(card);
+});
 const animObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
