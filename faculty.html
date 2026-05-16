@@ -20,23 +20,46 @@
     position: sticky;
     top: 0;
     z-index: 999;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
   }
   .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
   .nav-logo img { height: 42px; border-radius: 6px; }
   .nav-logo-text { color: #fff; font-size: 15px; font-weight: 700; line-height: 1.2; }
-  .nav-logo-text span { display: block; font-size: 10px; font-weight: 400; opacity: 0.8; }
+  .nav-logo-text span { display: block; font-size: 10px; font-weight: 400; opacity: 0.8; letter-spacing: 2px; }
   .nav-links { display: flex; gap: 28px; list-style: none; }
-  .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 14px; transition: color 0.2s; }
-  .nav-links a:hover, .nav-links a.active { color: #FFD700; }
+  .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 14px; transition: color 0.2s; padding-bottom: 4px; }
+  .nav-links a:hover { color: #FFD700; }
+  .nav-links a.active { color: #FFD700; border-bottom: 2px solid #FFD700; }
 
   /* HERO */
   .hero {
-    background: linear-gradient(135deg, #003087 0%, #0055cc 100%);
-    padding: 60px 20px 50px;
+    background: #003087;
+    background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(0,102,204,0.4) 0%, transparent 50%),
+                      repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.02) 40px, rgba(255,255,255,0.02) 80px);
+    padding: 70px 20px 60px;
     text-align: center;
+    position: relative;
+    overflow: hidden;
   }
-  .hero h1 { color: #fff; font-size: 36px; font-weight: 700; margin-bottom: 10px; }
-  .hero p { color: rgba(255,255,255,0.75); font-size: 15px; max-width: 500px; margin: 0 auto; }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at center, rgba(0,102,204,0.15) 0%, transparent 70%);
+    animation: pulse 6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 1; }
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero h1 { color: #fff; font-size: 38px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
+  .hero h1 span { color: #FFD700; }
+  .hero p { color: rgba(255,255,255,0.75); font-size: 15px; max-width: 500px; margin: 0 auto; line-height: 1.6; }
 
   /* COUNTERS */
   .counters {
@@ -44,21 +67,28 @@
     grid-template-columns: repeat(4, 1fr);
     background: #002070;
   }
-  .counter-box { padding: 20px; text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }
+  .counter-box { padding: 22px; text-align: center; border-right: 1px solid rgba(255,255,255,0.08); }
   .counter-box:last-child { border-right: none; }
   .counter-num { font-size: 32px; font-weight: 700; color: #FFD700; }
-  .counter-label { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 4px; }
+  .counter-label { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 4px; }
 
   /* FILTER */
-  .filter-section { background: #fff; padding: 20px 40px; display: flex; gap: 10px; flex-wrap: wrap; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .filter-section {
+    background: #fff;
+    padding: 20px 40px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
   .filter-btn {
-    padding: 8px 20px;
+    padding: 8px 22px;
     border-radius: 25px;
     border: 1.5px solid #003087;
     background: transparent;
     color: #003087;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.25s;
   }
@@ -69,7 +99,7 @@
   .section-title {
     text-align: center;
     padding: 40px 20px 10px;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
     color: #003087;
   }
@@ -83,8 +113,8 @@
   /* CARDS GRID */
   .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 28px;
     padding: 0 40px 60px;
     max-width: 1200px;
     margin: 0 auto;
@@ -92,26 +122,44 @@
 
   /* CARD */
   .card {
-    background: rgba(255,255,255,0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255,255,255,0.6);
+    background: #fff;
+    border: 2px solid #003087;
     border-radius: 16px;
     overflow: hidden;
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-    box-shadow: 0 4px 20px rgba(0,48,135,0.08);
+    transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s, border-color 0.3s;
+    box-shadow: 0 4px 15px rgba(0,48,135,0.1);
     will-change: transform;
+    position: relative;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #003087, #FFD700, #003087);
+    z-index: 2;
   }
   .card.visible { opacity: 1; transform: translateY(0); }
   .card.hidden { display: none; }
+  .card:hover {
+    box-shadow: 0 12px 35px rgba(0,48,135,0.2);
+    border-color: #FFD700;
+    transform: translateY(-6px) !important;
+  }
 
-  .card-img-wrap { position: relative; width: 100%; height: 220px; overflow: hidden; }
-  .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform 0.4s; }
-  .card:hover .card-img-wrap img { transform: scale(1.05); }
+  .card-img-wrap { position: relative; width: 100%; height: 230px; overflow: hidden; }
+  .card-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    transition: transform 0.4s;
+  }
+  .card:hover .card-img-wrap img { transform: scale(1.06); }
   .card-img-placeholder {
-    width: 100%; height: 220px;
+    width: 100%; height: 230px;
     background: linear-gradient(135deg, #003087, #0066cc);
     display: flex; align-items: center; justify-content: center;
     font-size: 64px; color: rgba(255,255,255,0.3);
@@ -119,24 +167,23 @@
 
   .badge {
     position: absolute; top: 12px; left: 12px;
-    background: rgba(0,48,135,0.88);
+    background: #003087;
     color: #FFD700;
-    font-size: 10px; font-weight: 600;
-    padding: 4px 10px;
+    font-size: 10px; font-weight: 700;
+    padding: 5px 12px;
     border-radius: 20px;
-    backdrop-filter: blur(6px);
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
     text-transform: uppercase;
+    border: 1px solid rgba(255,215,0,0.3);
   }
 
   .card-body { padding: 18px; }
-  .card-name { font-size: 15px; font-weight: 700; color: #003087; margin-bottom: 4px; }
-  .card-role { font-size: 12px; color: #0066cc; font-weight: 600; margin-bottom: 12px; letter-spacing: 0.3px; }
-  .card-meta { font-size: 12px; color: #555; display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
-  .card-meta svg { flex-shrink: 0; }
+  .card-name { font-size: 16px; font-weight: 700; color: #003087; margin-bottom: 4px; }
+  .card-role { font-size: 12px; color: #0066cc; font-weight: 600; margin-bottom: 12px; }
+  .card-meta { font-size: 12px; color: #555; display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
   .card-desc {
     font-size: 11.5px; color: #666; line-height: 1.6;
-    border-top: 1px solid rgba(0,48,135,0.1);
+    border-top: 2px solid rgba(0,48,135,0.08);
     padding-top: 10px; margin-top: 10px;
   }
 
@@ -155,6 +202,7 @@
     .filter-section { padding: 16px; }
     nav { padding: 0 16px; }
     .nav-links { gap: 16px; }
+    .nav-links a { font-size: 12px; }
   }
 </style>
 </head>
@@ -175,8 +223,10 @@
 </nav>
 
 <div class="hero">
-  <h1>Our Faculty</h1>
-  <p>Meet the dedicated team behind Oriental Institute of Technology, Mandi Bahauddin</p>
+  <div class="hero-content">
+    <h1>Our <span>Faculty</span></h1>
+    <p>Meet the dedicated team behind Oriental Institute of Technology, Mandi Bahauddin</p>
+  </div>
 </div>
 
 <div class="counters">
@@ -210,107 +260,72 @@
 
 <div class="cards-grid" id="grid">
 
-  <!-- Principal -->
   <div class="card" data-dept="management">
     <div class="card-img-wrap">
-      <img src="principal image1.webp" alt="Principal" onerror="this.parentElement.innerHTML='<div class=\'card-img-placeholder\'>👤</div>'">
+      <img src="principal image1.webp" alt="Principal" onerror="this.parentElement.innerHTML='<div class=card-img-placeholder>👤</div>'">
       <span class="badge">Principal</span>
     </div>
     <div class="card-body">
       <div class="card-name">Mr. Qasim Ali Sipra</div>
       <div class="card-role">Principal — OIT Mandi Bahauddin</div>
-      <div class="card-meta">
-        <svg width="13" height="13" fill="none" stroke="#0066cc" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        BSBC — Computer Science
-      </div>
-      <div class="card-meta">
-        <svg width="13" height="13" fill="none" stroke="#0066cc" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        5+ Years Experience
-      </div>
+      <div class="card-meta">🎓 BSBC — Computer Science</div>
+      <div class="card-meta">⏱ 5+ Years Experience</div>
       <div class="card-desc">A dedicated educational leader committed to nurturing talent and building the next generation of skilled technical professionals in Pakistan.</div>
     </div>
   </div>
 
-  <!-- Vice Principal -->
   <div class="card" data-dept="management">
     <div class="card-img-wrap">
-      <img src="voice principal image.jpg" alt="Vice Principal" onerror="this.parentElement.innerHTML='<div class=\'card-img-placeholder\'>👤</div>'">
+      <img src="voice principal image.jpg" alt="Vice Principal" onerror="this.parentElement.innerHTML='<div class=card-img-placeholder>👤</div>'">
       <span class="badge">Vice Principal</span>
     </div>
     <div class="card-body">
       <div class="card-name">Mr. Furqan Ahmed</div>
       <div class="card-role">Vice Principal — OIT Mandi Bahauddin</div>
-      <div class="card-meta">
-        <svg width="13" height="13" fill="none" stroke="#0066cc" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        MSc Mathematics, BSc Civil Engineering
-      </div>
-      <div class="card-meta">
-        <svg width="13" height="13" fill="none" stroke="#0066cc" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        15 Years Experience
-      </div>
+      <div class="card-meta">🎓 MSc Mathematics, BSc Civil Engg.</div>
+      <div class="card-meta">⏱ 15 Years Experience</div>
       <div class="card-desc">A seasoned academic leader bringing 15 years of expertise in mathematics and civil engineering to guide students toward excellence.</div>
     </div>
   </div>
 
-  <!-- Administrator -->
   <div class="card" data-dept="support">
     <div class="card-img-wrap">
-      <img src="administrator officer image.jpg" alt="Administrator" onerror="this.parentElement.innerHTML='<div class=\'card-img-placeholder\'>👤</div>'">
+      <img src="administrator officer image.jpg" alt="Administrator" onerror="this.parentElement.innerHTML='<div class=card-img-placeholder>👤</div>'">
       <span class="badge">Administrator</span>
     </div>
     <div class="card-body">
       <div class="card-name">Mr. Junaid Raza</div>
       <div class="card-role">Administrator — OIT Mandi Bahauddin</div>
-      <div class="card-meta">
-        <svg width="13" height="13" fill="none" stroke="#0066cc" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        BS Electrical Engineering
-      </div>
-      <div class="card-meta">
-        <svg width="13" height="13" fill="none" stroke="#0066cc" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        5+ Years Experience
-      </div>
+      <div class="card-meta">🎓 BS Electrical Engineering</div>
+      <div class="card-meta">⏱ 5+ Years Experience</div>
       <div class="card-desc">Ensuring smooth administrative operations and institutional management for students and faculty alike.</div>
     </div>
   </div>
 
-  <!-- HOD Electrical -->
   <div class="card" data-dept="teaching">
     <div class="card-img-wrap">
-      <img src="HOD electrical image.jpg" alt="HOD Electrical" onerror="this.parentElement.innerHTML='<div class=\'card-img-placeholder\'>👤</div>'">
+      <img src="HOD electrical image.jpg" alt="HOD Electrical" onerror="this.parentElement.innerHTML='<div class=card-img-placeholder>👤</div>'">
       <span class="badge">HOD Electrical</span>
     </div>
     <div class="card-body">
       <div class="card-name">Mr. Burhan</div>
       <div class="card-role">Head of Department — Electrical</div>
-      <div class="card-meta">
-        <svg width="13" height="13" fill="none" stroke="#0066cc" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        B.Tech — Electrical Engineering
-      </div>
-      <div class="card-meta">
-        <svg width="13" height="13" fill="none" stroke="#0066cc" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        5+ Years Experience
-      </div>
+      <div class="card-meta">🎓 B.Tech — Electrical Engineering</div>
+      <div class="card-meta">⏱ 5+ Years Experience</div>
       <div class="card-desc">Specialist in industrial electrical systems, wiring, automation and panel design with hands-on teaching approach.</div>
     </div>
   </div>
 
-  <!-- HOD Civil -->
   <div class="card" data-dept="teaching">
     <div class="card-img-wrap">
-      <img src="HOD civil image.jpg" alt="HOD Civil" onerror="this.parentElement.innerHTML='<div class=\'card-img-placeholder\'>👤</div>'">
+      <img src="HOD civil image.jpg" alt="HOD Civil" onerror="this.parentElement.innerHTML='<div class=card-img-placeholder>👤</div>'">
       <span class="badge">HOD Civil</span>
     </div>
     <div class="card-body">
       <div class="card-name">Mr. Shahzaib Ellahi</div>
       <div class="card-role">Head of Department — Civil</div>
-      <div class="card-meta">
-        <svg width="13" height="13" fill="none" stroke="#0066cc" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        BSc Civil Engineering
-      </div>
-      <div class="card-meta">
-        <svg width="13" height="13" fill="none" stroke="#0066cc" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        5+ Years Experience
-      </div>
+      <div class="card-meta">🎓 BSc Civil Engineering</div>
+      <div class="card-meta">⏱ 5+ Years Experience</div>
       <div class="card-desc">Expert in structural design, construction management and site supervision with a passion for practical civil engineering education.</div>
     </div>
   </div>
@@ -351,7 +366,7 @@ cards.forEach(card => {
     const r = card.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width - 0.5;
     const y = (e.clientY - r.top) / r.height - 0.5;
-    card.style.transform = `perspective(700px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) translateY(-6px)`;
+    card.style.transform = `perspective(700px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-6px)`;
   });
   card.addEventListener('mouseleave', () => {
     card.style.transform = '';
